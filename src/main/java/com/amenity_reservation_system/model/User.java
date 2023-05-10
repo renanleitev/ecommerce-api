@@ -1,30 +1,32 @@
-package com.amenity_reservation_system.domain;
+package com.amenity_reservation_system.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import java.util.Set;
+
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
+@Table(name = "\"user\"")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Reservation {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -40,24 +42,14 @@ public class Reservation {
     )
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDate reservationDate;
+    @OneToMany(mappedBy = "user")
+    private Set<Reservation> reservations;
 
-    @Column(nullable = false)
-    private LocalTime startTime;
-
-    @Column(nullable = false)
-    private LocalTime endTime;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @CreatedDate
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
