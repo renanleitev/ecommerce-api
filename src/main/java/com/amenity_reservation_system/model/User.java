@@ -33,6 +33,7 @@ public class User {
             generator = "primary_sequence"
     )
     private Long id;
+    private String name;
     private String surname;
     private String email;
     private String address;

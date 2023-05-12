@@ -11,7 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "\"product\"")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

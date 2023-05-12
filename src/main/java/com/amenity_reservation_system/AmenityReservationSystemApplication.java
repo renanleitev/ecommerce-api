@@ -66,8 +66,19 @@ public class AmenityReservationSystemApplication {
     }
 
     @Bean
-    public CommandLineRunner loadData(ProductRepository productRepository) {
+    public CommandLineRunner loadData(ProductRepository productRepository, UserRepository userRepository) {
         return (args) -> {
+
+            User user = User.builder()
+                    .name("John")
+                    .surname("Doe")
+                    .email("test@example.com")
+                    .address("123 Main Street")
+                    .password("123")
+                    .build();
+
+            userRepository.save(user);
+
             insertDummyProducts(20, productRepository);
         };
     }
